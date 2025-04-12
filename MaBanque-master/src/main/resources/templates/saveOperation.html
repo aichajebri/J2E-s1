@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="template1">
+<head>
+  <meta charset="UTF-8">
+  <title>Admin Operations</title>
+</head>
+<body>
+<div layout:fragment="content">
+  <div class="container">
+    <h2>Admin Operations</h2>
+    <!-- Admin-specific operation form -->
+    <form th:action="@{/admin/saveOperation}" method="post">
+      <div class="form-group">
+        <label>Account:</label>
+        <input type="text" name="accountCode" />
+      </div>
+      <div class="form-group">
+        <label>Amount:</label>
+        <input type="text" name="amount" />
+      </div>
+      <button type="submit" class="btn btn-primary">Save Operation</button>
+    </form>
+  </div>
+</div>
+</body>
+</html>

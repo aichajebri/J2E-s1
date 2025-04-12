@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorator="template1">
+<head>
+    <meta charset="UTF-8">
+    <title>Liste des comptes</title>
+    <style>
+        /* General page styling */
+        body {
+            background-color: #f5f8fa;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        h2 {
+            font-weight: 600;
+            color: #0073e6;
+            text-align: center;
+            margin-top: 30px;
+        }
+
+        .container {
+            padding: 40px;
+        }
+
+        .panel {
+            border-radius: 12px;
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.08);
+            margin-bottom: 30px;
+        }
+
+        .panel-heading {
+            background-color: #0073e6;
+            color: white;
+            padding: 12px 20px;
+            border-top-left-radius: 12px;
+            border-top-right-radius: 12px;
+        }
+
+        .panel-body {
+            padding: 20px;
+        }
+
+        .form-group label, .panel-body label {
+            font-weight: 500;
+            margin-right: 10px;
+        }
+
+        .btn-primary {
+            background-color: #0073e6;
+            border-color: #0073e6;
+            border-radius: 8px;
+            padding: 10px 20px;
+        }
+
+        .btn-primary:hover {
+            background-color: #005bb5;
+            border-color: #005bb5;
+        }
+
+        /* Table styling */
+        .table {
+            width: 100%;
+            border-radius: 8px;
+            overflow: hidden;
+            background-color: white;
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.08);
+        }
+
+        .table th {
+            text-align: center;
+            background-color: #0073e6;
+            color: white;
+            font-weight: bold;
+            padding: 12px;
+        }
+
+        .table-striped > tbody > tr:nth-of-type(odd) {
+            background-color: #f9fbfc;
+        }
+
+        .table-bordered th, .table-bordered td {
+            border: 1px solid #ddd;
+        }
+
+        /* Table data styling */
+        .table td {
+            text-align: center;
+            padding: 12px;
+            vertical-align: middle;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .container {
+                padding: 20px;
+            }
+
+            .table th, .table td {
+                font-size: 14px;
+                padding: 10px;
+            }
+
+            h2 {
+                font-size: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+<div layout:fragment="content">
+    <div class="container">
+        <h2>Liste des comptes</h2>
+        <table class="table table-bordered table-striped">
+            <thead>
+            <tr>
+                <th>Code</th>
+                <th>Type</th>
+                <th>Solde</th>
+                <th>Client</th>
+                <th>Date de création</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="compte : ${comptes}">
+                <td th:text="${compte.codeCompte}"></td>
+                <td th:text="${compte.class.simpleName}"></td>
+                <td th:text="${compte.solde}"></td>
+                <td th:text="${compte.client.nomClient}"></td>
+                <td th:text="${compte.dateCreation}"></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+</body>
+</html>

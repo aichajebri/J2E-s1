@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorator="template1">
+<head>
+  <meta charset="UTF-8">
+  <title>Liste des clients</title>
+  <style>
+    /* General page styling */
+    body {
+      background-color: #f5f8fa;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+
+    h2 {
+      font-weight: 600;
+      color: #0073e6;
+      text-align: center;
+      margin-top: 30px;
+    }
+
+    .container {
+      padding: 40px;
+    }
+
+    .panel {
+      border-radius: 12px;
+      box-shadow: 0 6px 15px rgba(0, 0, 0, 0.08);
+      margin-bottom: 30px;
+    }
+
+    .panel-heading {
+      background-color: #0073e6;
+      color: white;
+      padding: 12px 20px;
+      border-top-left-radius: 12px;
+      border-top-right-radius: 12px;
+    }
+
+    .panel-body {
+      padding: 20px;
+      background-color: #ffffff;
+      border-bottom-left-radius: 12px;
+      border-bottom-right-radius: 12px;
+    }
+
+    .table {
+      width: 100%;
+      border-radius: 8px;
+      overflow: hidden;
+      background-color: white;
+      box-shadow: 0 6px 15px rgba(0, 0, 0, 0.08);
+    }
+
+    .table th {
+      text-align: center;
+      background-color: #0073e6;
+      color: white;
+      font-weight: bold;
+      padding: 10px;
+    }
+
+    .table td {
+      text-align: center;
+      padding: 10px;
+    }
+
+    .table-striped > tbody > tr:nth-of-type(odd) {
+      background-color: #f9fbfc;
+    }
+
+    .table-bordered th, .table-bordered td {
+      border: 1px solid #ddd;
+    }
+
+    .nav-pills > li > a {
+      color: #0073e6;
+      border-radius: 20px;
+      margin-right: 5px;
+    }
+
+    .nav-pills > li > a:hover {
+      background-color: #0073e6;
+      color: white;
+    }
+
+    /* Hover effect for table rows */
+    .table tbody tr:hover {
+      background-color: #e6f7ff;
+      cursor: pointer;
+    }
+
+    /* Styling for list items */
+    ul {
+      padding-left: 20px;
+      list-style-type: none;
+    }
+
+    li {
+      margin-bottom: 5px;
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+      .container {
+        padding: 20px;
+      }
+
+      .table th, .table td {
+        font-size: 14px;
+        padding: 8px;
+      }
+
+      h2 {
+        font-size: 22px;
+        padding: 12px;
+      }
+    }
+  </style>
+</head>
+<body>
+<div layout:fragment="content">
+  <div class="container">
+    <h2>Liste des clients</h2>
+    <div class="panel">
+      <table class="table table-bordered table-striped">
+        <thead>
+        <tr>
+          <th>Nom</th>
+          <th>Email</th>
+          <th>Comptes</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="client : ${clients}">
+          <td th:text="${client.nomClient}"></td>
+          <td th:text="${client.emailClient}"></td>
+          <td>
+            <ul>
+              <li th:each="compte : ${client.comptes}" th:text="${compte.codeCompte}"></li>
+            </ul>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+</body>
+</html>

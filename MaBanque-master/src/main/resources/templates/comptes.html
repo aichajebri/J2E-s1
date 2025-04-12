@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	  xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4"
+	  layout:decorator="template1">
+<head>
+	<meta charset="utf-8">
+	<title>Ma banque</title>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+	<style>
+		/* The updated CSS styling */
+		body {
+			background-color: #f5f8fa;
+			font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+		}
+		h4 {
+			font-weight: 600;
+			color: white;
+			text-align: center; /* Center the text */
+			background-color: #0073e6; /* Blue background */
+			padding: 10px;
+			border-radius: 8px;
+			margin-top: 20px;
+		}
+		.panel {
+			border-radius: 12px;
+			box-shadow: 0 6px 15px rgba(0, 0, 0, 0.08);
+			margin-bottom: 30px;
+		}
+		.panel-heading {
+			background-color: #0073e6 !important;
+			color: white !important;
+			border-top-left-radius: 12px;
+			border-top-right-radius: 12px;
+			padding: 12px 20px;
+		}
+		.panel-body {
+			padding: 20px;
+		}
+		.form-group label, .panel-body label {
+			font-weight: 500;
+			margin-right: 10px;
+		}
+		input[type="text"], input[type="number"] {
+			padding: 8px;
+			border-radius: 8px;
+			border: 1px solid #ccc;
+			width: 100%;
+			margin-bottom: 12px;
+		}
+		.btn-primary {
+			background-color: #0073e6;
+			border-color: #0073e6;
+			border-radius: 8px;
+			padding: 10px 20px;
+		}
+		.btn-primary:hover {
+			background-color: #005bb5;
+			border-color: #005bb5;
+		}
+		table {
+			background-color: white;
+			border-radius: 8px;
+			overflow: hidden;
+			width: 100%;
+		}
+		/* Center and style the table header */
+		.table th {
+			text-align: center; /* Center the text */
+			background-color: #0073e6; /* Blue background */
+			color: white; /* White text */
+			font-weight: bold;
+		}
+		.table-striped > tbody > tr:nth-of-type(odd) {
+			background-color: #f9fbfc;
+		}
+		.nav-pills > li > a {
+			color: #0073e6;
+			border-radius: 20px;
+			margin-right: 5px;
+		}
+		.nav-pills > li > a:hover {
+			background-color: #0073e6;
+			color: white;
+		}
+	</style>
+</head>
+<body>
+<div layout:fragment="content" class="container" style="padding-top: 40px;">
+	<div class="row">
+		<div class="col-md-6">
+			<div class="panel panel-primary">
+				<div class="panel-heading">
+					<h4>Consultation d'un compte</h4>
+				</div>
+				<div class="panel-body">
+					<p><label>Compte chargé :</label> <span th:text="${codeCompte}"></span></p>
+				</div>
+			</div>
+
+			<div class="panel panel-primary" th:if="${compte}">
+				<div class="panel-heading">
+					<h4>Informations sur le compte</h4>
+				</div>
+				<div class="panel-body">
+					<p><label>Client :</label> <span th:text="${compte.client.nomClient}"></span></p>
+					<p><label>Code :</label> <span th:text="${compte.codeCompte}"></span></p>
+					<p><label>Solde :</label> <span th:text="${compte.solde}"></span></p>
+					<p><label>Date Création :</label> <span th:text="${compte.dateCreation}"></span></p>
+					<p><label>Type Compte :</label> <span th:text="${compte.class.simpleName}"></span></p>
+					<div th:if="${compte.class.simpleName == 'CompteCourant'}">
+						<p><label>Découvert :</label> <span th:text="${compte.decouvert}"></span></p>
+					</div>
+					<div th:if="${compte.class.simpleName == 'CompteEpargne'}">
+						<p><label>Taux :</label> <span th:text="${compte.taux}"></span></p>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="col-md-6">
+			<div class="panel panel-primary" th:if="${compte}">
+				<div class="panel-heading">
+					<h4>Opérations sur le compte</h4>
+				</div>
+				<div class="panel-body">
+					<form th:action="@{/user/saveOperation}" method="post">
+						<div class="form-group">
+							<label><input type="radio" name="typeOperation" value="VIR" onchange="document.getElementById('forVirement').style.display='block'"> Virement</label>
+						</div>
+						<div class="form-group" id="forVirement" style="display: none;">
+							<label>Vers :</label>
+							<input type="text" name="codeCompte2" />
+						</div>
+						<div class="form-group">
+							<label>Montant :</label>
+							<input type="text" name="montant" />
+						</div>
+						<button type="submit" class="btn btn-primary">Enregistrer</button>
+						<div class="text-danger"
+							 th:text="${#httpServletRequest.getParameter('error')}"></div>
+					</form>
+				</div>
+			</div>
+
+			<div class="panel panel-primary" th:if="${compte}">
+				<div class="panel-heading">
+					<h4>Liste des opérations</h4>
+				</div>
+				<div class="panel-body">
+					<table class="table table-striped">
+						<thead>
+						<tr>
+							<th>Numéro</th>
+							<th>Type</th>
+							<th>Date</th>
+							<th>Montant</th>
+						</tr>
+						</thead>
+						<tbody>
+						<tr th:each="op:${listOperations}">
+							<td th:text="${op.numeroOperation}"></td>
+							<td th:text="${op.class.simpleName}"></td>
+							<td th:text="${op.dateOperation}"></td>
+							<td th:text="${op.montantOperation}"></td>
+						</tr>
+						</tbody>
+					</table>
+
+					<div class="text-center">
+						<ul class="nav nav-pills">
+							<li th:each="p, status:${pages}">
+								<a th:href="@{/user/consulterCompte(codeCompte=${codeCompte}, page=${status.index})}" th:text="${status.index}"></a>
+							</li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+</body>
+</html>

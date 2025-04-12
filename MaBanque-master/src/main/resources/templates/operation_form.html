@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorator="template1">
+<head>
+  <meta charset="UTF-8">
+  <title>Formulaire Opération</title>
+</head>
+<body>
+<div layout:fragment="content">
+  <div class="col-md-6">
+    <div class="panel panel-primary">
+      <div class="panel-heading">
+        <h4>Formulaire Opération</h4>
+      </div>
+      <div class="panel-body">
+        <form th:action="@{/admin/saveOperation}" method="post">
+          <div class="form-group">
+            <label>Code Compte :</label>
+            <input type="text" class="form-control" name="codeCompte" required="required" />
+          </div>
+          <div class="form-group">
+            <label>Type d'Opération :</label><br/>
+            <input type="radio" name="typeOperation" value="VERS" checked="checked" />
+            <label>Versement</label>
+            <input type="radio" name="typeOperation" value="RETR" />
+            <label>Retrait</label>
+            <input type="radio" name="typeOperation" value="VIR" />
+            <label>Virement</label>
+          </div>
+          <div class="form-group">
+            <label>Montant :</label>
+            <input type="text" class="form-control" name="montant" required="required" />
+          </div>
+          <button type="submit" class="btn btn-primary">Enregistrer</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+</html>
