@@ -30,7 +30,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		BCryptPasswordEncoder bcpe = getBCPE();
 		System.out.println(bcpe.encode("1234"));
 
-		// In-memory authentication
 		auth.inMemoryAuthentication()
 				.withUser("admin").password(bcpe.encode("1234")).roles("ADMIN", "USER")
 				.and()
@@ -38,15 +37,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 				.and()
 				.passwordEncoder(getBCPE());
 
-		// Optional JDBC auth if needed later
-        /*
-        auth.jdbcAuthentication()
-            .dataSource(dataSource)
-            .usersByUsernameQuery("select username as principal, password as credentials, active from user where username=?")
-            .authoritiesByUsernameQuery("select username as principal, role as role from user_role where username=?")
-            .rolePrefix("ROLE_")
-            .passwordEncoder(getBCPE());
-        */
+
 	}
 
 	@Override
