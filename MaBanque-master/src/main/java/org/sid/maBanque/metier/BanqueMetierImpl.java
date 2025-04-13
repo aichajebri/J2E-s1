@@ -106,21 +106,21 @@ public class BanqueMetierImpl implements IBanqueMetier {
 //				.orElseThrow(() -> new RuntimeException("Client not found"));
 //
 //		// Generate a unique account code
-//		String code = generateAccountCode(); // You can implement this as needed
+//		String code = generateAccountCode(); 
 //
 //		// Create a new Compte (account)
 //		Compte compte = new Compte();
 //		compte.setCodeCompte(code);
 //		compte.setDateCreation(new Date());
 //		compte.setSolde(initialBalance);
-//		compte.setClient(client);  // Set the client to the account
+//		compte.setClient(client);  
 //
 //		// Save the account to the repository
 //		compteRepository.save(compte);
 //
 //		// Add the account to the client's list of accounts
 //		client.getComptes().add(compte);
-//		clientRepository.save(client); // Update client with the new account
+//		clientRepository.save(client); 
 //
 //		return compte;
 //	}
