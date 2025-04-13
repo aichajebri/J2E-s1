@@ -23,8 +23,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	private DataSource dataSource;
 
 	@Autowired
-	private CustomSuccessHandler customSuccessHandler; // ✅ Inject your custom handler
-
+	private CustomSuccessHandler customSuccessHandler; 
 	@Override
 	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
 		BCryptPasswordEncoder bcpe = getBCPE();
@@ -50,7 +49,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 				.and()
 				.formLogin()
 				.loginPage("/login")
-				.successHandler(customSuccessHandler) // ✅ Use your custom success handler here
+				.successHandler(customSuccessHandler) 
 				.permitAll()
 				.and()
 				.exceptionHandling().accessDeniedPage("/403")
